@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "333143246063",
+    "firebase_url": "https://trello-baaa3-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "trello-baaa3",
+    "storage_bucket": "trello-baaa3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333143246063:android:9f5a76fd964bb60aa3471a",
+        "android_client_info": {
+          "package_name": "com.example.trello_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwvnTM7LSfwnhRh9ztZWDxUsYfxjwOugk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
