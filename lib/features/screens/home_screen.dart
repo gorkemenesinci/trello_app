@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:trello_app/features/screens/create_card.dart';
 import 'package:trello_app/features/screens/create_dashboard.dart';
 import 'package:trello_app/models/colors.dart';
 
@@ -50,10 +51,15 @@ class _HomeScreenState extends State<HomeScreen> {
               color: appColor.loginText,
             ),
             onSelected: (value) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CreateDashboard()));
+              if (value.characters.first == 'P') {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CreateDashboard()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CreateCard()));
+              }
             },
             itemBuilder: (BuildContext context) {
               return <String>['Pano Oluştur', 'Bir Kart Yarat']
