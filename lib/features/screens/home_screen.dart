@@ -57,8 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     MaterialPageRoute(
                         builder: (context) => const CreateDashboard()));
               } else {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CreateCard()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CreateCard()));
               }
             },
             itemBuilder: (BuildContext context) {

@@ -27,7 +27,7 @@ class _CreateCardState extends State<CreateCard> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: appColor.buttonForeground,
+      backgroundColor: appColor.homeBackground,
       appBar: AppBar(
         backgroundColor: appColor.backgroundColor,
         leading: IconButton(
@@ -62,9 +62,16 @@ class _CreateCardState extends State<CreateCard> {
                     TextButton(
                         onPressed: () {},
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const Text("Deneme"),
-                            Text("$_username çalışma alanı"),
+                            Text(
+                              "Deneme",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                            Text(
+                              "$_username çalışma alanı",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
                           ],
                         ))
                   ],
@@ -81,9 +88,12 @@ class _CreateCardState extends State<CreateCard> {
                   children: [
                     TextButton(
                         onPressed: () {},
-                        child: const Column(
+                        child: Column(
                           children: [
-                            Text("Deneme"),
+                            Text(
+                              "Deneme",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
                           ],
                         ))
                   ],
@@ -92,13 +102,13 @@ class _CreateCardState extends State<CreateCard> {
             ),
             SizedBox(height: screenHeight * 0.015),
             Container(
-                color: Colors.white,
+                color: appColor.backgroundColor,
                 height: screenHeight * 0.07,
                 child: const CardTextfield(
                     hintText: "Bir ad eklemek için dokunun")),
             SizedBox(height: screenHeight * 0.002),
             Container(
-                color: Colors.white,
+                color: appColor.backgroundColor,
                 height: screenHeight * 0.15,
                 child:
                     const CardTextfield(hintText: "Tarif eklemek için tıkla")),
@@ -136,8 +146,13 @@ class _CreateCardState extends State<CreateCard> {
                   children: [
                     TextButton(
                         onPressed: () {},
-                        child: const Column(
-                          children: [Text("0")],
+                        child: Column(
+                          children: [
+                            Text(
+                              "0",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            )
+                          ],
                         ))
                   ],
                 ),

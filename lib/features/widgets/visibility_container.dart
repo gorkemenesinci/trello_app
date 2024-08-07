@@ -14,7 +14,7 @@ class VisibilityContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: screenHeight * 0.15,
-      color: appColor.homeBackground,
+      color: appColor.buttonBackground,
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Column(

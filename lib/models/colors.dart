@@ -5,7 +5,7 @@ class AppColor {
   Color buttonBackground = const Color.fromARGB(255, 18, 79, 126);
   Color buttonForeground = Colors.black;
   Color loginText = Colors.white;
-  Color homeBackground = Colors.black45;
+  Color homeBackground = Colors.white24;
   Color panobuttonBackground = Colors.deepPurple;
   Color textfieldHintText = Colors.white38;
 }

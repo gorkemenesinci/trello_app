@@ -9,7 +9,7 @@ class CardContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: appColor.loginText,
+      color: appColor.backgroundColor,
       width: double.infinity,
       alignment: Alignment.center,
       height: height,
