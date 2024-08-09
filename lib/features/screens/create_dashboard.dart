@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trello_app/features/screens/visibility_screen.dart';
 import 'package:trello_app/features/widgets/dashboard_container.dart';
 import 'package:trello_app/models/colors.dart';
+import 'package:trello_app/services/provider/dashboard_provider.dart';
 
 class CreateDashboard extends StatefulWidget {
   const CreateDashboard({super.key});
@@ -16,6 +18,7 @@ class _CreateDashboardState extends State<CreateDashboard> {
   AppColor appColor = AppColor();
   String _username = "";
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  TextEditingController controller = TextEditingController();
   @override
   void initState() {
     name();
@@ -35,7 +38,15 @@ class _CreateDashboardState extends State<CreateDashboard> {
         ),
         actions: [
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                final dashboardTitle = controller.text.trim();
+                final dashboradVisibility =
+                    Provider.of<DashboardProvider>(context, listen: false)
+                        .visibility;
+                Provider.of<DashboardProvider>(context, listen: false)
+                    .addList(dashboardTitle, dashboradVisibility);
+                Navigator.of(context).pop();
+              },
               child: Text(
                 "OLUŞTUR",
                 style: Theme.of(context)
@@ -52,6 +63,7 @@ class _CreateDashboardState extends State<CreateDashboard> {
           children: [
             SizedBox(height: screenHeight * 0.02),
             TextFormField(
+              controller: controller,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   hintText: "Yeni Pano",
@@ -91,11 +103,17 @@ class _CreateDashboardState extends State<CreateDashboard> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const VisibilityScreen(),
+                          builder: (context) => VisibilityScreen(
+                            onVisibilitySelected: (String visibility) {
+                              Provider.of<DashboardProvider>(context,
+                                      listen: false)
+                                  .setVisibility(visibility);
+                            },
+                          ),
                         ));
                   },
                   child: Text(
-                    "Herkese Açık",
+                    Provider.of<DashboardProvider>(context).visibility,
                     style: Theme.of(context).textTheme.bodyMedium,
                   )),
             ),

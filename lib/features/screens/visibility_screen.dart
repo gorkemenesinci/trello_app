@@ -5,7 +5,8 @@ import 'package:trello_app/features/widgets/visibility_container.dart';
 import 'package:trello_app/models/colors.dart';
 
 class VisibilityScreen extends StatefulWidget {
-  const VisibilityScreen({super.key});
+  const VisibilityScreen({super.key, required this.onVisibilitySelected});
+  final Function(String) onVisibilitySelected;
 
   @override
   State<VisibilityScreen> createState() => _VisibilityScreenState();
@@ -53,18 +54,24 @@ class _VisibilityScreenState extends State<VisibilityScreen> {
               color: Colors.white,
               child: Column(
                 children: [
-                  VisibilityContainer(
-                      text: Text(
-                        "Gizli",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(decoration: TextDecoration.underline),
-                      ),
-                      text2: Text(
-                        "Yönetim kurulu üyeleri ve $_username çalışma alanı çalışma alanı  yöneticileri bu panoyu görebilir ve düzenleyebilir.",
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      )),
+                  InkWell(
+                    onTap: () {
+                      widget.onVisibilitySelected('Gizli');
+                      Navigator.of(context).pop();
+                    },
+                    child: VisibilityContainer(
+                        text: Text(
+                          "Gizli",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(decoration: TextDecoration.underline),
+                        ),
+                        text2: Text(
+                          "Yönetim kurulu üyeleri ve $_username çalışma alanı çalışma alanı  yöneticileri bu panoyu görebilir ve düzenleyebilir.",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        )),
+                  ),
                 ],
               ),
             ),
@@ -77,18 +84,24 @@ class _VisibilityScreenState extends State<VisibilityScreen> {
               color: Colors.white,
               child: Column(
                 children: [
-                  VisibilityContainer(
-                      text: Text(
-                        "Çalışma Alanı",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(decoration: TextDecoration.underline),
-                      ),
-                      text2: Text(
-                        "$_username çalışma alanı çalışma alanındaki herkes bu panoyu görebilir.",
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ))
+                  InkWell(
+                    onTap: () {
+                      widget.onVisibilitySelected('Çalışma Alanı');
+                      Navigator.of(context).pop();
+                    },
+                    child: VisibilityContainer(
+                        text: Text(
+                          "Çalışma Alanı",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(decoration: TextDecoration.underline),
+                        ),
+                        text2: Text(
+                          "$_username çalışma alanı çalışma alanındaki herkes bu panoyu görebilir.",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        )),
+                  )
                 ],
               ),
             ),
@@ -99,16 +112,22 @@ class _VisibilityScreenState extends State<VisibilityScreen> {
               color: Colors.white,
               child: Column(
                 children: [
-                  VisibilityContainer(
-                    text: Text(
-                      "Herkese Açık",
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            decoration: TextDecoration.underline,
-                          ),
-                    ),
-                    text2: Text(
-                      "Bu pano herkese açık. Bağlantı linkine sahip herkes  tarafından görüntülenebilir ve Google gibi arama motorlarında görünecektir. Ancak sadece panoya davet edilenler düzenleme yapma yetkisine sahiptir",
-                      style: Theme.of(context).textTheme.bodyLarge,
+                  InkWell(
+                    onTap: () {
+                      widget.onVisibilitySelected('Herkese Açık');
+                      Navigator.of(context).pop();
+                    },
+                    child: VisibilityContainer(
+                      text: Text(
+                        "Herkese Açık",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              decoration: TextDecoration.underline,
+                            ),
+                      ),
+                      text2: Text(
+                        "Bu pano herkese açık. Bağlantı linkine sahip herkes  tarafından görüntülenebilir ve Google gibi arama motorlarında görünecektir. Ancak sadece panoya davet edilenler düzenleme yapma yetkisine sahiptir",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ),
                   )
                 ],

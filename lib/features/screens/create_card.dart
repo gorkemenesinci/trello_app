@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trello_app/features/screens/card_detail_screen.dart';
 import 'package:trello_app/features/widgets/card_container.dart';
 import 'package:trello_app/features/widgets/card_textfield.dart';
 import 'package:trello_app/models/colors.dart';
+import 'package:trello_app/services/provider/dashboard_provider.dart';
 
 class CreateCard extends StatefulWidget {
-  const CreateCard({super.key});
+  const CreateCard({super.key, required this.onDashboardSelected});
+  final Function(String) onDashboardSelected;
 
   @override
   State<CreateCard> createState() => _CreateCardState();
@@ -15,7 +19,11 @@ class CreateCard extends StatefulWidget {
 class _CreateCardState extends State<CreateCard> {
   final AppColor appColor = AppColor();
   String _username = "";
+  String selectedDashboardTitle = ""; // Seçilen pano başlığını saklamak için
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
   @override
   void initState() {
     name();
@@ -36,7 +44,13 @@ class _CreateCardState extends State<CreateCard> {
         ),
         actions: [
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                final title = titleController.text.trim();
+                final description = descriptionController.text.trim();
+                Provider.of<DashboardProvider>(context, listen: false)
+                    .addListTile(title, description, selectedDashboardTitle);
+                Navigator.of(context).pop();
+              },
               child: Text(
                 "Oluştur",
                 style: Theme.of(context)
@@ -46,7 +60,7 @@ class _CreateCardState extends State<CreateCard> {
               )),
         ],
         title: const Text("Kart"),
-        centerTitle: true, // Resmi ortalamak için
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -60,12 +74,29 @@ class _CreateCardState extends State<CreateCard> {
                 trailing: Column(
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final selectedDashboard =
+                              await Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CardDetailScreen(),
+                            ),
+                          );
+
+                          if (selectedDashboard != null &&
+                              selectedDashboard is String) {
+                            setState(() {
+                              selectedDashboardTitle = selectedDashboard;
+                            });
+                            widget.onDashboardSelected(selectedDashboard);
+                          }
+                        },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              "Deneme",
+                              selectedDashboardTitle.isNotEmpty
+                                  ? selectedDashboardTitle
+                                  : "Pano Seçin",
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                             Text(
@@ -104,14 +135,18 @@ class _CreateCardState extends State<CreateCard> {
             Container(
                 color: appColor.backgroundColor,
                 height: screenHeight * 0.07,
-                child: const CardTextfield(
+                child: CardTextfield(
+                    maxLenght: 50,
+                    controller: titleController,
                     hintText: "Bir ad eklemek için dokunun")),
             SizedBox(height: screenHeight * 0.002),
             Container(
                 color: appColor.backgroundColor,
                 height: screenHeight * 0.15,
-                child:
-                    const CardTextfield(hintText: "Tarif eklemek için tıkla")),
+                child: CardTextfield(
+                    maxLenght: 200,
+                    controller: descriptionController,
+                    hintText: "Tarif eklemek için tıkla")),
             SizedBox(height: screenHeight * 0.015),
             CardContainer(
               height: screenHeight * 0.05,
